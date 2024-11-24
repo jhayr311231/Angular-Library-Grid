@@ -1,0 +1,42 @@
+<div class="book-list">
+    <h2 class="book-list__title">Book List</h2>
+
+    <!-- Display the list of books -->
+    <div class="book-list__grid">
+        <div class="book-list__item" *ngFor="let book of books">
+            <div class="book-item">
+                <!-- Display book image -->
+                <img [src]="book.imageUrl" alt="{{ book.title }} cover" class="book-item__image" />
+
+                <!-- Display book details -->
+                <div class="book-item__details">
+                    <span class="book-item__title"><strong>{{ book.title }}</strong> by {{ book.author }} ({{ book.year }})</span>
+                    <p class="book-item__description">{{ book.description }}</p>
+                    <!-- Display rating stars -->
+                    <div class="book-item__rating">
+                        <span *ngFor="let star of getStars(book.rating)">
+              <i class="star" [ngClass]="{'filled': star === 'filled', 'empty': star === 'empty'}">★</i>
+            </span>
+                    </div>
+                </div>
+                <button class="book-item__remove-btn" (click)="removeBook(book.id)">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form to add a new book -->
+    <div class="book-list__add-form">
+        <h3 class="book-list__form-title">Add a New Book</h3>
+        <input [(ngModel)]="newBook.title" placeholder="Title" class="book-list__input" />
+        <input [(ngModel)]="newBook.author" placeholder="Author" class="book-list__input" />
+        <input [(ngModel)]="newBook.year" type="number" placeholder="Year" class="book-list__input" />
+        <input [(ngModel)]="newBook.imageUrl" placeholder="Image URL" class="book-list__input" />
+        <textarea [(ngModel)]="newBook.description" placeholder="Description" class="book-list__textarea"></textarea>
+
+        <!-- Rating input -->
+        <label for="rating">Rating (1-5):</label>
+        <input [(ngModel)]="newBook.rating" type="number" min="1" max="5" id="rating" class="book-list__rating-input" />
+
+        <button class="book-list__add-btn" (click)="addBook()">Add Book</button>
+    </div>
+</div>
